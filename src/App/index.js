@@ -11,8 +11,8 @@ import { EmptyTodos } from "../EmptyTodos";
 import { TodoForm } from "../TodoForm";
 import { CreateTodoButton } from "../CreateTodoButton";
 import { Modal } from "../Modal";
-import { ChangeAlert } from "../ChangeAlert";
-import { ChangeAlertWithStorageListener } from "../ChangeAlert";
+
+import { ChangeAlert, ChangeAlertWithStorageListener } from "../ChangeAlert";
 
 function App() {
     const {
@@ -46,26 +46,19 @@ function App() {
             </TodoHeader>
 
             <TodoList
+                // propiedades que no son render props
                 error={error}
                 loading={loading}
                 searchedTodos={searchedTodos}
                 searchText={searchValue}
                 totalTodos={totalTodos}
-                onError={() => <TodosError />}
-                onLoading={() => <TodosLoading />}
+                // renders pros
+                onError={() => <TodosError />} // onError es una propiedad de <TodoList/>,
+                onLoading={() => <TodosLoading />} //
                 onEmptyTodos={() => <EmptyTodos />}
                 onEmptySearchResults={(searchText) => (
                     <p>no hay resultado para {searchText}</p>
                 )}
-                /* render={(todo) => (
-                    <TodoItem
-                        key={todo.text}
-                        text={todo.text}
-                        completed={todo.completed}
-                        onComplete={() => completeTodo(todo.text)}
-                        onDelete={() => deleteTodo(todo.text)}
-                    />
-                )} */
             >
                 {(todo) => (
                     <TodoItem
@@ -86,9 +79,9 @@ function App() {
 
             <CreateTodoButton setOpenModal={setOpenModal} />
 
-            <ChangeAlertWithStorageListener sincronize={sincronizeTodos} />
+            <ChangeAlert sincronize={sincronizeTodos} />
         </React.Fragment>
     );
-}
+} 
 
 export default App;
